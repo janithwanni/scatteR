@@ -1,9 +1,9 @@
 Package: scatteR
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Generate Instace Space Based On Scagnostics
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
+Author: Janith Wanniarachchi
+Maintainer: Janith Wanniarachchi <janithcwanni@gmail.com>
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
 License: MIT + file LICENSE
