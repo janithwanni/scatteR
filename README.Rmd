@@ -18,37 +18,22 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of scatteR is to ...
+scatteR generates scatterplots based on [scagnostic](https://cran.r-project.org/web/packages/scagnostics/index.html) measurements.
 
 ## Installation
 
-You can install the released version of scatteR from [CRAN](https://CRAN.R-project.org) with:
+You can install the released version of scatteR from [Github](https://github.com/janithwanni/scatteR) with:
 
 ``` r
-install.packages("scatteR")
+install.packages("devtools")
+devtools::install_github("janithwanni/scatteR")
 ```
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
-
 ```{r example}
 library(scatteR)
 ## basic example code
+df <- scatteR(measurements = c("Montonic" = 0.9),n_points = 20,init_points = 5)
+plot(df$x,df$y)
 ```
-
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
-
-```{r cars}
-summary(cars)
-```
-
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date.
-
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
-```
-
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub!
