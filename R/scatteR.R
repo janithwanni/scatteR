@@ -2,11 +2,15 @@
 #' @param measurements A named vector containing the scagnostic measurements that the resulting scatterplot should have
 #' @param n_points The number of points that the resulting scatterplot should have
 #' @param init_points The number of initial points to use to build the iterative scatterplots
+#' @param global_min the error that the resulting scagnostics can give
+#' @param error_var the variance of the random error that is added on to the existing points
 #' @param seed The random number generation seed
 #' @param ... Extra arguments to be fed into GenSA package
 #' @export
 scatteR <- function(measurements = c("Monotonic" = 1.0,"Outlying" = 0.5),
-                    n_points = 50,init_points = 5,seed = 69420,...){
+                    n_points = 50,init_points = 5,
+                    global_min = 0.01,error_var = 0.01,
+                    seed = 69420,...){
   # TODO set init_points and iterations to NULL
   # TODO check if both init_points and iterations are NULL and raise error
   # TODO set the initi_points or iterations accordingly
@@ -14,8 +18,8 @@ scatteR <- function(measurements = c("Monotonic" = 1.0,"Outlying" = 0.5),
   iterations <- round(n_points / init_points)
   lower <- rep(0.0,(2*init_points))
   upper <- rep(1.0,(2*init_points))
-  global.min <- 0.01
-  error_variance <- 0.01
+  global.min <- global_min
+  error_variance <- error_var
   set.seed(seed)
 
   loss_func <- function(solution){
