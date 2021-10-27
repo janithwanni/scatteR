@@ -8,7 +8,8 @@
 
 scatteR generates scatterplots based on
 [scagnostic](https://cran.r-project.org/web/packages/scagnostics/index.html)
-measurements.
+measurements. The current implementation uses the GenSA package for
+optimization.
 
 ## Installation
 
