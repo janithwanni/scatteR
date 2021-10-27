@@ -9,7 +9,7 @@
 #' @export
 scatteR <- function(measurements = c("Monotonic" = 1.0,"Outlying" = 0.5),
                     n_points = 50,init_points = 5,
-                    global_min = 0.01,error_var = 0.01,
+                    global_min = 0.001,error_var = 0.001,
                     seed = 69420,...){
   # TODO set init_points and iterations to NULL
   # TODO check if both init_points and iterations are NULL and raise error
