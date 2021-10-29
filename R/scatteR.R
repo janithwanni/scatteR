@@ -1,16 +1,18 @@
 #' @title Generate scatterplots based on the scagnostics measurement
 #' @param measurements A named vector containing the scagnostic measurements that the resulting scatterplot should have
-#' @param n_points The number of points that the resulting scatterplot should have
+#' @param n_points The number of points that the resulting scatterplot should have.
 #' @param init_points The number of initial points to use to build the iterative scatterplots
 #' @param global_min the error that the resulting scagnostics can give
 #' @param error_var the variance of the random error that is added on to the existing points
+#' @param epochs number of epochs the optimization method should run
 #' @param seed The random number generation seed
+#' @param verbose Logical. TRUE means that messages from the optimization algorithm are shown. Default is TRUE
 #' @param ... Extra arguments to be fed into GenSA package
 #' @export
 scatteR <- function(measurements = c("Monotonic" = 1.0,"Outlying" = 0.5),
                     n_points = 50,init_points = 5,
-                    global_min = 0.001,error_var = 0.001,
-                    seed = 69420,...){
+                    global_min = 0.001,error_var = 0.001,epochs = 100,
+                    seed = 69420,verbose = TRUE,...){
   # TODO set init_points and iterations to NULL
   # TODO check if both init_points and iterations are NULL and raise error
   # TODO set the initi_points or iterations accordingly
@@ -35,7 +37,9 @@ scatteR <- function(measurements = c("Monotonic" = 1.0,"Outlying" = 0.5),
   ox <- NULL
   oy <- NULL
   for(iter in 1:iterations){
-    print(paste("Epoch",iter))
+    if(verbose){
+      print(paste("Epoch",iter))
+    }
     if(is.null(ox) & is.null(oy)){
       par <- stats::runif(dimension)
     }
@@ -47,8 +51,9 @@ scatteR <- function(measurements = c("Monotonic" = 1.0,"Outlying" = 0.5),
     out <- GenSA::GenSA(par = par,
                  lower = lower,upper = upper,
                  fn = loss_func,
-                 control = list(threshold.stop = global.min,
-                                verbose=TRUE,smooth = FALSE,trace.mat = FALSE))
+                 control = list(maxit = epochs, threshold.stop = global.min,
+                                verbose=verbose,smooth = FALSE,seed = seed,
+                                trace.mat = FALSE,...))
     ox <- out$par[1:init_points]
     oy <- out$par[(init_points+1):length(out$par)]
     mx <- c(mx,ox)

@@ -8,18 +8,30 @@ scatteR(
   measurements = c(Monotonic = 1, Outlying = 0.5),
   n_points = 50,
   init_points = 5,
+  global_min = 0.001,
+  error_var = 0.001,
+  epochs = 100,
   seed = 69420,
+  verbose = TRUE,
   ...
 )
 }
 \arguments{
 \item{measurements}{A named vector containing the scagnostic measurements that the resulting scatterplot should have}
 
-\item{n_points}{The number of points that the resulting scatterplot should have}
+\item{n_points}{The number of points that the resulting scatterplot should have.}
 
 \item{init_points}{The number of initial points to use to build the iterative scatterplots}
 
+\item{global_min}{the error that the resulting scagnostics can give}
+
+\item{error_var}{the variance of the random error that is added on to the existing points}
+
+\item{epochs}{number of epochs the optimization method should run}
+
 \item{seed}{The random number generation seed}
+
+\item{verbose}{Logical. TRUE means that messages from the optimization algorithm are shown. Default is TRUE}
 
 \item{...}{Extra arguments to be fed into GenSA package}
 }
