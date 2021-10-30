@@ -1,6 +1,7 @@
 library(scatteR)
 library(scagnostics)
 library(tibble)
+library(here)
 print(sessionInfo())
 
 values <- seq(0,1,length.out=3)
@@ -30,6 +31,6 @@ for(type in types){
             table$measurement_value == value,"rmse"] = rmse
     table[table$measurement_type == type &
             table$measurement_value == value,"mae"] = mae
-    write.csv(table,"table.csv")
+    write.csv(table,here("experiment","table.csv"))
   }
 }
