@@ -12,7 +12,7 @@
 scatteR <- function(measurements = c("Monotonic" = 1.0,"Outlying" = 0.5),
                     n_points = 50,init_points = 5,
                     global_min = 0.001,error_var = 0.001,epochs = 100,
-                    seed = 69420,verbose = TRUE,...){
+                    seed = 1835,verbose = TRUE,...){
   # TODO set init_points and iterations to NULL
   # TODO check if both init_points and iterations are NULL and raise error
   # TODO set the initi_points or iterations accordingly
