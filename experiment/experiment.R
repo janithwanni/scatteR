@@ -31,6 +31,6 @@ for(type in types){
             table$measurement_value == value,"rmse"] = rmse
     table[table$measurement_type == type &
             table$measurement_value == value,"mae"] = mae
-    write.csv(table,here("experiment","table.csv"))
+    write.csv(table,here("experiment",paste(Sys.time(),"table.csv")))
   }
 }
