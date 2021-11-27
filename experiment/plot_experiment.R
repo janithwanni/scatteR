@@ -9,5 +9,17 @@ df %>%
   geom_tile(aes(fill = rmse)) +
   geom_text(aes(label = round(rmse,4)),color = "white",size = 4) +
   theme_minimal() +
-  labs(title = "Experiment results of scatteR",subtitle = "Root Mean Square Error calculated using 20 replicates of 50 points generated using 5 initial points within 3 hours",x = "Scagnostic measurement type",y = "Expected Measurement value",fill = "RMSE") +
+  labs(title = "Experiment results of scatteR",subtitle = "RMSE calculated using 20 replicates of 50 points generated using 5 initial points",x = "Scagnostic measurement type",y = "Expected Measurement value",fill = "RMSE") +
   theme(legend.position = "bottom")
+ggsave(here("experiment","rmse_plot_experiment.eps"),device = "eps",
+       width = 6,height = 4,units = "in",dpi = 300)
+
+df %>%
+  ggplot(aes(x = measurement_type,y = measurement_value),color="white") +
+  geom_tile(aes(fill = mae)) +
+  geom_text(aes(label = round(mae,4)),color = "white",size = 4) +
+  theme_minimal() +
+  labs(title = "Experiment results of scatteR",subtitle = "MAE calculated using 20 replicates of 50 points generated using 5 initial points",x = "Scagnostic measurement type",y = "Expected Measurement value",fill = "MAE") +
+  theme(legend.position = "bottom")
+ggsave(here("experiment","mae_plot_experiment.eps"),device = "eps",
+       width = 6,height = 4,units = "in",dpi = 300)
