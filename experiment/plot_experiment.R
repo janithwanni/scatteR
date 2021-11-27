@@ -7,7 +7,7 @@ df <- read_csv(here("experiment","table.csv")) %>% select(-1)
 df %>%
   ggplot(aes(x = measurement_type,y = measurement_value),color="white") +
   geom_tile(aes(fill = rmse)) +
-  geom_text(aes(label = round(rmse,4)),color = "white",size = 4) +
+  geom_text(aes(label = round(rmse,3)),color = "white",size = 4) +
   theme_minimal() +
   labs(title = "Experiment results of scatteR",subtitle = "RMSE calculated using 20 replicates of 50 points generated using 5 initial points",x = "Scagnostic measurement type",y = "Expected Measurement value",fill = "RMSE") +
   theme(legend.position = "bottom")
@@ -17,7 +17,7 @@ ggsave(here("experiment","rmse_plot_experiment.eps"),device = "eps",
 df %>%
   ggplot(aes(x = measurement_type,y = measurement_value),color="white") +
   geom_tile(aes(fill = mae)) +
-  geom_text(aes(label = round(mae,4)),color = "white",size = 4) +
+  geom_text(aes(label = round(mae,3)),color = "white",size = 4) +
   theme_minimal() +
   labs(title = "Experiment results of scatteR",subtitle = "MAE calculated using 20 replicates of 50 points generated using 5 initial points",x = "Scagnostic measurement type",y = "Expected Measurement value",fill = "MAE") +
   theme(legend.position = "bottom")
