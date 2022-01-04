@@ -11,7 +11,7 @@ types <- c("Monotonic","Skinny","Sparse","Stringy","Convex","Skewed","Clumpy","S
 replicates <- 20
 n_points <- 50
 init_points <- 5
-table <- tibble(measurement_type = rep(types,each=3),measurement_value = rep(values,length(types)),rmse = -1,mae = -1)
+table <- tibble(measurement_type = rep(types,each=3),measurement_value = rep(values,length(types)),rmse = -1,mae = -1,errors = "NA")
 
 for(type in types){
   for(value in values){
@@ -31,6 +31,8 @@ for(type in types){
             table$measurement_value == value,"rmse"] = rmse
     table[table$measurement_type == type &
             table$measurement_value == value,"mae"] = mae
-    write.csv(table,here("experiment",paste(Sys.time(),"table.csv")))
+    table[table$measurement_type == type &
+            table$measurement_value == value,"errors"] = paste(error_vector,collapse="|")
+    write.csv(table,here("experiment",paste("v2","table.csv")))
   }
 }
