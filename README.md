@@ -14,6 +14,31 @@ scagnostics measurement calculation.
 
 ## What are these scagnostics?
 
+Simply put scagnostics are like diagnostics for scatterplots. Each
+scatterplot will have a certain set of characteristics that scagnostics
+will show to you. You can learn more about it through this
+[paper](https://www.semanticscholar.org/paper/Graph-theoretic-scagnostics-Wilkinson-Anand/8bc9868fe6c936614f7f94b01757723e9ffaaa43).
+
+``` r
+library(palmerpenguins)
+library(scagnostics)
+plot(penguins$bill_length_mm,penguins$bill_depth_mm)
+```
+
+<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" /> The
+above scatterplot has the following characteristics according to
+scagnostics.
+
+``` r
+scagnostics(penguins$bill_length_mm,penguins$bill_depth_mm)
+#>   Outlying     Skewed     Clumpy     Sparse   Striated     Convex     Skinny 
+#> 0.12472358 0.74153837 0.03680493 0.04861830 0.06785714 0.56068995 0.49944162 
+#>    Stringy  Monotonic 
+#> 0.37671468 0.06405996 
+#> attr(,"class")
+#> [1] "scagnostics"
+```
+
 ## Installation
 
 You can install the released version of scatteR from
@@ -76,7 +101,6 @@ df <- scatteR(measurements = c("Monotonic" = 0.9),n_points = 100)
 ```
 
 ``` r
-library(scagnostics)
 scagnostics(df)
 #>  Outlying    Skewed    Clumpy    Sparse  Striated    Convex    Skinny   Stringy 
 #> 0.2538847 0.8248022 0.1018009 0.1291258 0.1967213 0.4598955 0.6536334 0.4664043 
@@ -90,47 +114,40 @@ scagnostics(df)
 plot(df$x,df$y)
 ```
 
-<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
 
 ### Integration into the tidy workflow
 
 ``` r
 library(tidyverse)
-scatteR(c("Stringy" = 0.9),n_points = 100) %>% # data generation
+scatteR(c("Convex" = 0.9),n_points = 250,verbose=FALSE) %>% # data generation
   mutate(label = ifelse(y > x,"Upper","Lower")) %>% # data preprocessing
   ggplot(aes(x = x,y = y,color=label))+
   geom_point()+
   theme_minimal()+
   theme(legend.position = "bottom")
-#> [1] "Epoch 1"
-#> [1] "Epoch 2"
-#> [1] "Epoch 3"
-#> [1] "Epoch 4"
-#> [1] "Epoch 5"
-#> [1] "Epoch 6"
-#> [1] "Epoch 7"
-#> [1] "Epoch 8"
-#> [1] "Epoch 9"
-#> It: 1, obj value: 0.09934402332
-#> [1] "Epoch 10"
-#> It: 1, obj value: 0.06629350702
-#> [1] "Epoch 11"
-#> It: 1, obj value: 0.03616240147
-#> [1] "Epoch 12"
-#> It: 7, obj value: 0.003361880466
-#> [1] "Epoch 13"
-#> [1] "Epoch 14"
-#> It: 1, obj value: 0.09295584075
-#> [1] "Epoch 15"
-#> [1] "Epoch 16"
-#> [1] "Epoch 17"
-#> It: 1, obj value: 7.79039731e-05
-#> [1] "Epoch 18"
-#> It: 1, obj value: 7.79039731e-05
-#> [1] "Epoch 19"
-#> It: 1, obj value: 7.79039731e-05
-#> [1] "Epoch 20"
-#> It: 1, obj value: 7.79039731e-05
 ```
 
-<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
+
+### Using scagnostics output to generate data
+
+``` r
+generated <- scatteR(scagnostics(penguins$bill_length_mm,
+                                 penguins$bill_depth_mm),
+        n_points = length(penguins$bill_length_mm),verbose=FALSE)
+penguins %>% 
+  select(bill_length_mm,bill_depth_mm) %>% 
+  drop_na() %>% 
+  rename(x = bill_length_mm,y = bill_depth_mm) %>% 
+  mutate(x = (x - min(x)) / (max(x) - min(x)),
+         y = (y - min(y)) / (max(y) - min(y)),
+         source = "penguins") %>% 
+  bind_rows(generated %>% mutate(source = "generated")) %>% 
+ggplot(aes(x = x,y = y,color=source))+
+  geom_point()+
+  theme_minimal()+
+  theme(legend.position = "bottom")
+```
+
+<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />

@@ -23,7 +23,18 @@ scatteR generates scatterplots based on [scagnostic](https://cran.r-project.org/
 
 ## What are these scagnostics?
 
-Simply put scagnostics are like diagnostics for scatterplots
+Simply put scagnostics are like diagnostics for scatterplots. Each scatterplot will have a certain set of characteristics that scagnostics will show to you. You can learn more about it through this [paper](https://www.semanticscholar.org/paper/Graph-theoretic-scagnostics-Wilkinson-Anand/8bc9868fe6c936614f7f94b01757723e9ffaaa43).
+
+```{r}
+library(palmerpenguins)
+library(scagnostics)
+plot(penguins$bill_length_mm,penguins$bill_depth_mm)
+```
+The above scatterplot has the following characteristics according to scagnostics.
+
+```{r}
+scagnostics(penguins$bill_length_mm,penguins$bill_depth_mm)
+```
 
 ## Installation
 
@@ -45,7 +56,6 @@ df <- scatteR(measurements = c("Monotonic" = 0.9),n_points = 100)
 ```
 
 ```{r}
-library(scagnostics)
 scagnostics(df)
 ```
 
@@ -57,12 +67,32 @@ plot(df$x,df$y)
 
 ```{r,warning=FALSE,message=FALSE}
 library(tidyverse)
-scatteR(c("Convex" = 0.9),n_points = 250) %>% # data generation
+scatteR(c("Convex" = 0.9),n_points = 250,verbose=FALSE) %>% # data generation
   mutate(label = ifelse(y > x,"Upper","Lower")) %>% # data preprocessing
   ggplot(aes(x = x,y = y,color=label))+
   geom_point()+
   theme_minimal()+
   theme(legend.position = "bottom")
   
+```
+
+### Using scagnostics output to generate data
+
+```{r}
+generated <- scatteR(scagnostics(penguins$bill_length_mm,
+                                 penguins$bill_depth_mm),
+        n_points = length(penguins$bill_length_mm),verbose=FALSE)
+penguins %>% 
+  select(bill_length_mm,bill_depth_mm) %>% 
+  drop_na() %>% 
+  rename(x = bill_length_mm,y = bill_depth_mm) %>% 
+  mutate(x = (x - min(x)) / (max(x) - min(x)),
+         y = (y - min(y)) / (max(y) - min(y)),
+         source = "penguins") %>% 
+  bind_rows(generated %>% mutate(source = "generated")) %>% 
+ggplot(aes(x = x,y = y,color=source))+
+  geom_point()+
+  theme_minimal()+
+  theme(legend.position = "bottom")
 ```
 
