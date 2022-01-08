@@ -1,22 +1,28 @@
 library(scatteR)
 library(microbenchmark)
-
+library(here)
 
 # computation time by scag type and value ---------------------------------
-replicates <- 10
-n_points <- 10
-init_points <- 5
-
-values <- seq(0,1,length.out=3)
-types <- c("Monotonic","Skinny","Sparse","Stringy","Convex","Skewed","Clumpy","Striated","Outlying")
-# values <- seq(0,1,length.out=1)
-# types <- c("Monotonic","Skinny")
+minified <- FALSE
+if(minified){
+  replicates <- 2
+  n_points <- 10
+  init_points <- 5
+  values <- seq(0,1,length.out=1)
+  types <- c("Monotonic")
+}else{
+  replicates <- 10
+  n_points <- 50
+  init_points <- 5
+  values <- seq(0,1,length.out=3)
+  types <- c("Monotonic","Skinny","Sparse","Stringy","Convex","Skewed","Clumpy","Striated","Outlying")
+}
 
 main_mcb <- NULL
 
 for(type in types){
   for(value in values){
-    # print(paste(type,value))
+    print(paste(type,value))
     measurement <- c(value)
     names(measurement) <- c(type)
     mcb <- microbenchmark(
@@ -33,4 +39,7 @@ for(type in types){
   }
 }
 
-write.csv(main_mcb,"scag_type_value_experiment_benchmark.csv",row.names = FALSE)
+write.csv(main_mcb,
+          here("experiment","computation_time_experiment","results",
+               "scag_type_value_experiment_benchmark.csv"),
+          row.names = FALSE)
