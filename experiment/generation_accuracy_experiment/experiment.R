@@ -33,6 +33,6 @@ for(type in types){
             table$measurement_value == value,"mae"] = mae
     table[table$measurement_type == type &
             table$measurement_value == value,"errors"] = paste(error_vector,collapse="|")
-    write.csv(table,here("experiment",paste("v2","table.csv")))
+    write.csv(table,here("experiment","generation_accuracy_experiment","gen_acc_exp.csv"),row.names=FALSE)
   }
 }
