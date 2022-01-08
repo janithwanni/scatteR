@@ -19,7 +19,11 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-scatteR generates scatterplots based on [scagnostic](https://cran.r-project.org/web/packages/scagnostics/index.html) measurements. The current implementation uses the GenSA package for optimization.
+scatteR generates scatterplots based on [scagnostic](https://cran.r-project.org/web/packages/scagnostics/index.html) measurements. The current implementation uses Simulated Annealing based on the GenSA package for optimization and rJava is required for the scagnostics measurement calculation.
+
+## What are these scagnostics?
+
+Simply put scagnostics are like diagnostics for scatterplots
 
 ## Installation
 
@@ -32,11 +36,12 @@ devtools::install_github("janithwanni/scatteR")
 
 ## Example
 
+### Simple usage
+
 ```{r example}
 library(scatteR)
 ## basic example code
-df <- scatteR(measurements = c("Monotonic" = 0.9),n_points = 20,
-              init_points = 4,error_var = 0.05,global_min = 0.01)
+df <- scatteR(measurements = c("Monotonic" = 0.9),n_points = 100)
 ```
 
 ```{r}
@@ -47,3 +52,17 @@ scagnostics(df)
 ```{r}
 plot(df$x,df$y)
 ```
+
+### Integration into the tidy workflow
+
+```{r,warning=FALSE,message=FALSE}
+library(tidyverse)
+scatteR(c("Convex" = 0.9),n_points = 250) %>% # data generation
+  mutate(label = ifelse(y > x,"Upper","Lower")) %>% # data preprocessing
+  ggplot(aes(x = x,y = y,color=label))+
+  geom_point()+
+  theme_minimal()+
+  theme(legend.position = "bottom")
+  
+```
+
