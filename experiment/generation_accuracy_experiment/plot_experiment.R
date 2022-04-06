@@ -1,7 +1,7 @@
 library(tidyverse)
 library(here)
 
-df <- read_csv(here("experiment","table.csv")) %>% select(-1)
+df <- read_csv(here("experiment","generation_accuracy_experiment","table.csv")) %>% select(-1)
 # df <- read_csv(here("experiment","experiment_results.csv"))
 
 df %>%
