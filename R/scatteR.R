@@ -7,12 +7,13 @@
 #' @param epochs number of epochs the optimization method should run
 #' @param seed The random number generation seed
 #' @param verbose Logical. TRUE means that messages from the optimization algorithm are shown. Default is TRUE
-#' @param ... Extra arguments to be fed into GenSA package
+#' @param loss The loss function to be used within the scatteR program. Can be either 'mae' or 'mse'. Default is 'mae'
+#' @param ... Extra arguments to be used in the control argument of the GenSA function of the GenSA package
 #' @export
 scatteR <- function(measurements = c("Monotonic" = 1.0,"Outlying" = 0.5),
                     n_points = 50,init_points = 5,
                     global_min = 0.001,error_var = 0.001,epochs = 100,
-                    seed = 1835,verbose = TRUE,...){
+                    seed = 1835,verbose = TRUE,loss="mae",...){
   # TODO set init_points and iterations to NULL
   # TODO check if both init_points and iterations are NULL and raise error
   # TODO set the initi_points or iterations accordingly
@@ -29,7 +30,13 @@ scatteR <- function(measurements = c("Monotonic" = 1.0,"Outlying" = 0.5),
     y <- c(my,solution[(init_points+1):length(solution)])
     result <- scagnostics::scagnostics(x,y)
     current_value <- result[names(measurements)]
-    return(mean(abs(current_value - measurements)))
+    if(loss == "mae"){
+      return(mean(abs(current_value - measurements)))
+    }else if(loss == "mse"){
+      return(mean((current_value - measurements)^2))
+    }else{
+      return(mean(abs(current_value - measurements)))
+    }
   }
 
   mx <- c()

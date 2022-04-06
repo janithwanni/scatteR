@@ -11,8 +11,9 @@ scatteR(
   global_min = 0.001,
   error_var = 0.001,
   epochs = 100,
-  seed = 69420,
+  seed = 1835,
   verbose = TRUE,
+  loss = "mae",
   ...
 )
 }
@@ -33,7 +34,9 @@ scatteR(
 
 \item{verbose}{Logical. TRUE means that messages from the optimization algorithm are shown. Default is TRUE}
 
-\item{...}{Extra arguments to be fed into GenSA package}
+\item{loss}{The loss function to be used within the scatteR program. Can be either 'mae' or 'mse'. Default is 'mae'}
+
+\item{...}{Extra arguments to be used in the control argument of the GenSA function of the GenSA package}
 }
 \description{
 Generate scatterplots based on the scagnostics measurement
