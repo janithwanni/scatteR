@@ -49,8 +49,7 @@ scatteR <- function(measurements = c("Monotonic" = 1.0,"Outlying" = 0.5),
     }
     if(is.null(ox) & is.null(oy)){
       par <- stats::runif(dimension)
-    }
-    else{
+    }else{
       xeps <- stats::rnorm(init_points,mean=0,sd=error_variance)
       yeps <- stats::rnorm(init_points,mean=0,sd=error_variance)
       par <- c(ox+xeps,oy+yeps)

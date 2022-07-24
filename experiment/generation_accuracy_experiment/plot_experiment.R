@@ -21,5 +21,5 @@ df %>%
   theme_minimal() +
   labs(title = "Experiment results of scatteR",subtitle = "MAE calculated using 20 replicates of 50 points generated using 5 initial points",x = "Scagnostic measurement type",y = "Expected Measurement value",fill = "MAE") +
   theme(legend.position = "bottom")
-ggsave(here("experiment","mae_plot_experiment.eps"),device = "eps",
-       width = 6,height = 4,units = "in",dpi = 300)
+ggsave(here("experiment","mae_plot_experiment.jpg"),device = "jpg",bg="white",
+       width = 1920,height = 1080,units = "px",dpi = 300)
