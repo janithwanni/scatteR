@@ -1,15 +1,48 @@
 library(palmerpenguins)
 library(tidyverse)
 library(scatteR)
-library(parallel)
+# library(parallel)
+library(here)
+
+gen_art_data <- function(data){
+  cols <- colnames(data %>% select_if(is.numeric))
+  results <- t(combn(cols,2))
+  synth_ls <- future_apply(results,1,function(row){
+    x <- row[1] |> unlist()
+    y <- row[2] |> unlist()
+    factors <- which(length(data[[x]]) %% seq(1,length(data[[x]])) == 0)
+    d <- scatteR::scatteR(scagnostics::scagnostics(data[[x]],data[[y]]),
+                          n_points = length(data[[x]]),
+                          init_points = factors[ceiling(quantile(seq(length(factors)),0.75))],epochs = 200)
+    # destd_x <- (d$x * (max(data[[x]])-min(data[[x]]))) + min(data[[x]])
+    # destd_y <- (d$y * (max(data[[y]])-min(data[[y]]))) + min(data[[y]])
+    # d$x <- destd_x
+    # d$y <- destd_y
+    list(d)
+  })
+  synth_df <- imap_dfr(synth_ls,function(df,i){
+    df[[1]] |> mutate(comb = i,
+                 comb_x = results[i,1] |> unlist(),
+                 comb_y = results[i,2] |> unlist())
+  })
+  synth_df %>%
+    ggplot(aes(x,y,color = factor(comb_y)))+
+    geom_jitter()+
+    geom_smooth(se = FALSE,method="lm") +
+    coord_polar(theta = "x",start=0.1)+
+    theme_void()+
+    theme(legend.position="none")+
+    scale_color_brewer(palette = "Reds")
+}
 
 check_synthesis <- function(data){
-  cl <- makeCluster(getOption("cl.cores", 2))
-  on.exit(stopCluster(cl))
+  # cl <- makeCluster(getOption("cl.cores", 4))
+  # on.exit(stopCluster(cl))
   cols <- colnames(data %>% select_if(is.numeric))
-  results <- expand_grid(X = cols, Y = cols) %>%
-    filter(X != Y)
-  exp_tib <- parApply(cl,results,1, function(row){
+  # results <- expand_grid(X = cols, Y = cols) %>%
+  #   filter(X != Y)
+  results <- t(combn(cols,2))
+  exp_tib <- apply(results,1, function(row){
     x <- row[1] |> unlist()
     y <- row[2] |> unlist()
     factors <- which(length(data[[x]]) %% seq(1,length(data[[x]])) == 0)
@@ -61,9 +94,7 @@ check_synthesis <- function(data){
   return(list(results = results,gen = gen,synth_data = synth_data))
 }
 
-# mtcars %>% pivot_longer(cols = c("cyl","disp","mpg"),names_to = "var",values_to = "val") %>% ggplot(aes(x = val)) + geom_histogram() + facet_wrap(~ var,scales="free")
-
-dataset <- "mtcars" # can be either mtcars, adult or penguins
+dataset <- "penguins" # can be either mtcars, adult or penguins
 
 if(dataset == "mtcars"){
   mtcars <- read_csv(here("experiment","data_synthesis_accuracy_experiment","mtcars.csv"))
@@ -92,7 +123,6 @@ if(dataset == "adult"){
   adults <- read_csv(here("experiment","data_synthesis_accuracy_experiment","adult.csv"))
   adultsynth <- check_synthesis(adults)
   saveRDS(adultsynth,file = here("experiment","data_synthesis_accuracy_experiment","adultsynth.rds"))
-
 }
 
 
