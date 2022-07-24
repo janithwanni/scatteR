@@ -3,3 +3,7 @@
 .RData
 .Ruserdata
 .DS_Store
+archive/
+plots/
+experiment/genart/
+experiment/animate-simulated-annealing/
