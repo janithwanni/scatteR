@@ -9,12 +9,12 @@ Authors@R: c(
            email = "janithcwanni@gmail.com"),
     person(given = "Thiyanga S.",
            family = "Talagala",
-           role = c("aut", "cre"),
+           role = c("aut"),
            email = "ttalagala@sjp.ac.lk",
            comment = c(ORCID = "0000-0002-5058-7503")))
 Maintainer: Janith Wanniarachchi <janithcwanni@gmail.com>
 Description: Generate bivariate data based on scatterplot features defined through scagnostics.
-License: CC BY 4.0
+License: CC BY 4.0 + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports: 

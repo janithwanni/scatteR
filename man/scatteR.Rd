@@ -7,7 +7,7 @@
 scatteR(
   measurements = c(Monotonic = 1, Outlying = 0.5),
   n_points = 50,
-  init_points = 5,
+  init_points = NULL,
   global_min = 0.001,
   error_var = 0.001,
   epochs = 100,
@@ -22,7 +22,7 @@ scatteR(
 
 \item{n_points}{The number of points that the resulting scatterplot should have.}
 
-\item{init_points}{The number of initial points to use to build the iterative scatterplots}
+\item{init_points}{The number of initial points to use to build the iterative scatterplots. Default is NULL in which case the factors of n_points will be calculated and the 25th quantile from the set of factors will be used.}
 
 \item{global_min}{the error that the resulting scagnostics can give}
 
