@@ -13,14 +13,17 @@ Authors@R: c(
            email = "ttalagala@sjp.ac.lk",
            comment = c(ORCID = "0000-0002-5058-7503")))
 Maintainer: Janith Wanniarachchi <janithcwanni@gmail.com>
-Description: Generate bivariate data based on scatterplot features defined through scagnostics.
+Description: Generate bivariate data based on scatterplot features defined through scagnostics. 
+    Set the required values for the scagnostic measurement type and the number of points that are needed to generate a bivariate dataset that gives the expected scagnostic measurements.
+SystemRequirements: Java 8 or higher
 License: CC BY 4.0 + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports: 
     scagnostics,
     GenSA,
-    stats
+    stats,
+    rJava
 Suggests: 
     testthat
 RoxygenNote: 7.1.2
