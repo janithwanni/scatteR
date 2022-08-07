@@ -1,12 +1,20 @@
 Package: scatteR
 Type: Package
 Title: Generate Instace Space Based On Scagnostics
-Version: 0.1.0
-Author: Janith Wanniarachchi
+Version: 0.0.1
+Authors@R: c(
+    person(given = "Janith C.",
+           family = "Wanniarachchi",
+           role = c("aut", "cre"),
+           email = "janithcwanni@gmail.com"),
+    person(given = "Thiyanga S.",
+           family = "Talagala",
+           role = c("aut", "cre"),
+           email = "ttalagala@sjp.ac.lk",
+           comment = c(ORCID = "0000-0002-5058-7503")))
 Maintainer: Janith Wanniarachchi <janithcwanni@gmail.com>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: MIT + file LICENSE
+Description: Generate bivariate data based on scatterplot features defined through scagnostics.
+License: CC BY 4.0
 Encoding: UTF-8
 LazyData: true
 Imports: 
