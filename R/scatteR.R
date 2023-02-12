@@ -9,6 +9,7 @@
 #' @param verbose Logical. TRUE means that messages from the optimization algorithm are shown. Default is TRUE
 #' @param loss The loss function to be used within the scatteR program. Can be either 'mae' or 'mse'. Default is 'mae'
 #' @param ... Extra arguments to be used in the control argument of the GenSA function of the GenSA package
+#' @return A bivariate data.frame with two columns named x and y that gives a roughly similar scagnostic measurement to the `measurements` argument
 #' @export
 scatteR <- function(measurements = c("Monotonic" = 1.0,"Outlying" = 0.5),
                     n_points = 50,init_points = NULL,

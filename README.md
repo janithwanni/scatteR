@@ -7,7 +7,7 @@
 <!-- badges: end -->
 
 scatteR generates scatterplots based on
-[scagnostic](https://cran.r-project.org/web/packages/scagnostics/index.html)
+[scagnostic](https://cran.r-project.org/package=scagnostics)
 measurements. The current implementation uses Simulated Annealing based
 on the GenSA package for optimization and rJava is required for the
 scagnostics measurement calculation.
@@ -17,12 +17,17 @@ scagnostics measurement calculation.
 Simply put scagnostics are like diagnostics for scatterplots. Each
 scatterplot will have a certain set of characteristics that scagnostics
 will show to you. You can learn more about it through this
-[paper](https://www.semanticscholar.org/paper/Graph-theoretic-scagnostics-Wilkinson-Anand/8bc9868fe6c936614f7f94b01757723e9ffaaa43).
+[paper](https://doi.org/10.1109/INFVIS.2005.1532142).
 
 ``` r
 library(palmerpenguins)
 library(scagnostics)
-plot(penguins$bill_length_mm,penguins$bill_depth_mm)
+library(ggplot2)
+qplot(x = bill_length_mm,y = bill_depth_mm,data=penguins)+
+  theme_minimal()+
+  labs(x = "Bill length",y = "Bill depth",
+       title = "Scatterplot of bill length and bill depth",
+       subtitle = "Data provided by palmerpenguins dataset")
 ```
 
 <img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" /> The
@@ -58,54 +63,62 @@ library(scatteR)
 ## basic example code
 df <- scatteR(measurements = c("Monotonic" = 0.9),n_points = 100)
 #> [1] "Epoch 1"
-#> It: 1, obj value: 0.06908920274
+#> It: 1, obj value: 0.002060606061
 #> [1] "Epoch 2"
-#> It: 1, obj value: 0.02826137844
-#> It: 47, obj value: 0.001234673525
+#> It: 1, obj value: 0.002382925918
+#> It: 20, obj value: 0.001763206699
+#> It: 94, obj value: 0.000693521734
 #> [1] "Epoch 3"
-#> It: 1, obj value: 0.0003086341952
+#> It: 1, obj value: 0.0009634972381
 #> [1] "Epoch 4"
-#> It: 1, obj value: 0.0001684042791
+#> It: 1, obj value: 0.001210817323
 #> [1] "Epoch 5"
+#> It: 1, obj value: 0.0006452760813
 #> [1] "Epoch 6"
-#> It: 1, obj value: 4.731619094e-05
+#> It: 1, obj value: 0.0002109779468
 #> [1] "Epoch 7"
-#> It: 1, obj value: 6.463110673e-05
+#> It: 1, obj value: 4.33048594e-05
 #> [1] "Epoch 8"
-#> It: 1, obj value: 0.0005844103336
+#> It: 1, obj value: 2.879774646e-05
 #> [1] "Epoch 9"
-#> It: 1, obj value: 2.90872382e-05
+#> It: 1, obj value: 1.78457193e-05
 #> [1] "Epoch 10"
-#> It: 1, obj value: 1.092022236e-05
+#> It: 1, obj value: 5.342541186e-05
 #> [1] "Epoch 11"
-#> It: 1, obj value: 4.10444138e-05
+#> It: 1, obj value: 0.0007308666196
 #> [1] "Epoch 12"
-#> It: 1, obj value: 2.63737808e-06
+#> It: 1, obj value: 0.003797876988
+#> It: 27, obj value: 0.0001279653614
 #> [1] "Epoch 13"
-#> It: 1, obj value: 9.462761899e-05
 #> [1] "Epoch 14"
-#> It: 1, obj value: 6.843463089e-06
 #> [1] "Epoch 15"
-#> It: 1, obj value: 3.937853737e-06
 #> [1] "Epoch 16"
-#> It: 1, obj value: 0.005547845654
-#> It: 8, obj value: 1.647764738e-06
+#> It: 1, obj value: 0.0001079452511
 #> [1] "Epoch 17"
-#> It: 1, obj value: 7.81726338e-06
+#> It: 1, obj value: 0.0001488984651
 #> [1] "Epoch 18"
-#> It: 1, obj value: 2.918974143e-06
+#> It: 1, obj value: 3.746684033e-05
 #> [1] "Epoch 19"
-#> It: 1, obj value: 3.764917101e-05
+#> It: 1, obj value: 4.910409006e-05
 #> [1] "Epoch 20"
-#> It: 1, obj value: 1.067942567e-05
+#> It: 1, obj value: 5.739727661e-06
+#> [1] "Epoch 21"
+#> It: 1, obj value: 2.171413779e-05
+#> [1] "Epoch 22"
+#> [1] "Epoch 23"
+#> It: 1, obj value: 0.002067656372
+#> It: 10, obj value: 6.65756155e-06
+#> [1] "Epoch 24"
+#> [1] "Epoch 25"
+#> It: 1, obj value: 2.006914323e-05
 ```
 
 ``` r
 scagnostics(df)
 #>  Outlying    Skewed    Clumpy    Sparse  Striated    Convex    Skinny   Stringy 
-#> 0.2538847 0.8248022 0.1018009 0.1291258 0.1967213 0.4598955 0.6536334 0.4664043 
+#> 0.3374091 0.8469671 0.2213065 0.1606455 0.1296296 0.2339855 0.6467435 0.4519979 
 #> Monotonic 
-#> 0.9000107 
+#> 0.8999799 
 #> attr(,"class")
 #> [1] "scagnostics"
 ```

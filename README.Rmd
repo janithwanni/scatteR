@@ -19,16 +19,21 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-scatteR generates scatterplots based on [scagnostic](https://cran.r-project.org/web/packages/scagnostics/index.html) measurements. The current implementation uses Simulated Annealing based on the GenSA package for optimization and rJava is required for the scagnostics measurement calculation.
+scatteR generates scatterplots based on [scagnostic](https://cran.r-project.org/package=scagnostics) measurements. The current implementation uses Simulated Annealing based on the GenSA package for optimization and rJava is required for the scagnostics measurement calculation.
 
 ## What are these scagnostics?
 
-Simply put scagnostics are like diagnostics for scatterplots. Each scatterplot will have a certain set of characteristics that scagnostics will show to you. You can learn more about it through this [paper](https://www.semanticscholar.org/paper/Graph-theoretic-scagnostics-Wilkinson-Anand/8bc9868fe6c936614f7f94b01757723e9ffaaa43).
+Simply put scagnostics are like diagnostics for scatterplots. Each scatterplot will have a certain set of characteristics that scagnostics will show to you. You can learn more about it through this [paper](https://doi.org/10.1109/INFVIS.2005.1532142).
 
 ```{r}
 library(palmerpenguins)
 library(scagnostics)
-plot(penguins$bill_length_mm,penguins$bill_depth_mm)
+library(ggplot2)
+qplot(x = bill_length_mm,y = bill_depth_mm,data=penguins)+
+  theme_minimal()+
+  labs(x = "Bill length",y = "Bill depth",
+       title = "Scatterplot of bill length and bill depth",
+       subtitle = "Data provided by palmerpenguins dataset")
 ```
 The above scatterplot has the following characteristics according to scagnostics.
 

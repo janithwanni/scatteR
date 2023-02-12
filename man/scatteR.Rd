@@ -38,6 +38,9 @@ scatteR(
 
 \item{...}{Extra arguments to be used in the control argument of the GenSA function of the GenSA package}
 }
+\value{
+A bivariate data.frame with two columns named x and y that gives a roughly similar scagnostic measurement to the `measurements` argument
+}
 \description{
 Generate scatterplots based on the scagnostics measurement
 }
