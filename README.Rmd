@@ -29,7 +29,8 @@ Simply put scagnostics are like diagnostics for scatterplots. Each scatterplot w
 library(palmerpenguins)
 library(scagnostics)
 library(ggplot2)
-qplot(x = bill_length_mm,y = bill_depth_mm,data=penguins)+
+ggplot(aes(x = bill_length_mm,y = bill_depth_mm),data=penguins)+
+  geom_point() +
   theme_minimal()+
   labs(x = "Bill length",y = "Bill depth",
        title = "Scatterplot of bill length and bill depth",
