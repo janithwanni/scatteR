@@ -26,4 +26,4 @@ Imports:
 Suggests: 
     testthat,
     rJava
-RoxygenNote: 7.1.2
+RoxygenNote: 7.3.3
