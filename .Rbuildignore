@@ -8,3 +8,4 @@ experiment/
 hexsticker/
 genart/
 archive/
+^cran-comments\.md$
