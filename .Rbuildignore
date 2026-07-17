@@ -10,3 +10,4 @@ genart/
 archive/
 ^cran-comments\.md$
 ^CRAN-SUBMISSION$
+.github
